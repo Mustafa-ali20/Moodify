@@ -1,14 +1,17 @@
-import './App.css'
-import FaceExpression from './Features/Expressions/Components/FaceExpression'
+import { RouterProvider } from "react-router-dom";
+import "./App.css";
+import FaceExpression from "./Features/Expressions/Components/FaceExpression";
+import { router } from "./app.routes";
+import { AuthProvider } from "./Features/Auth/auth.context";
 
 function App() {
-
-
   return (
     <>
-     <FaceExpression />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
