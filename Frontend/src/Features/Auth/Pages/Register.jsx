@@ -1,23 +1,28 @@
 import React, { useState } from "react";
-import FormGroup from "../components/FormGroup"; // adjust path as needed
-import { Link } from "react-router-dom";
+import FormGroup from "../Components/FormGroup";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../Hooks/useAuth";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
   });
+
+  const { loading, handleRegister } = useAuth();
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log(formData);
-    // call your register API here
-  };
+    await handleRegister(formData);
+    navigate("/");
+  }
 
   return (
     <div className="min-h-screen bg-neutral-950 flex items-center justify-center px-4">
@@ -37,7 +42,7 @@ const Register = () => {
             label="Name"
             placeholder="Enter your name"
             type="text"
-            name="name"
+            name="username"
             value={formData.name}
             onChange={handleChange}
           />

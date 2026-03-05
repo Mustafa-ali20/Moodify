@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import FormGroup from "../Components/FormGroup"; // adjust path as needed
-import { Link } from "react-router-dom";
+import FormGroup from "../Components/FormGroup";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../Hooks/useAuth";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -8,14 +9,19 @@ const Login = () => {
     password: "",
   });
 
+  const { loading, handleLogin } = useAuth();
+
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log(formData);
-  };
+    await handleLogin(formData);
+    navigate("/");
+  }
 
   return (
     <div className="min-h-screen bg-neutral-950 flex items-center justify-center px-4">
