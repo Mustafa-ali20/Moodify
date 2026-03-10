@@ -3,12 +3,15 @@ import "./App.css";
 import FaceExpression from "./Features/Expressions/Components/FaceExpression";
 import { router } from "./app.routes";
 import { AuthProvider } from "./Features/Auth/auth.context";
+import { SongContextProvider } from "./Features/Home/song.context";
 
 function App() {
   return (
     <>
       <AuthProvider>
-        <RouterProvider router={router} />
+        <SongContextProvider>
+          <RouterProvider router={router} />
+        </SongContextProvider>
       </AuthProvider>
     </>
   );

@@ -23,7 +23,7 @@ export default function FaceExpression() {
   }, []);
 
   return (
-    <div style={{ textAlign: "center" }}>
+    <div className="bg-zinc-700 h-screen" style={{ textAlign: "center" }}>
       <video
         ref={videoRef}
         style={{ width: "400px", borderRadius: "12px" }}
