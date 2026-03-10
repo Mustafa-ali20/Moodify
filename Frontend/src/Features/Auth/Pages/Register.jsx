@@ -1,87 +1,72 @@
 import React, { useState } from "react";
-import FormGroup from "../Components/FormGroup";
 import { Link, useNavigate } from "react-router-dom";
+import FormGroup from "../Components/FormGroup";
 import { useAuth } from "../Hooks/useAuth";
+import "../Shared/authLayout.scss";
+
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
-
+  const [formData, setFormData] = useState({ username: "", email: "", password: "" });
   const { loading, handleRegister } = useAuth();
-
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     await handleRegister(formData);
     navigate("/");
-  }
+  };
 
   return (
-    <div className="min-h-screen bg-neutral-950 flex items-center justify-center px-4">
-      <div className="w-full max-w-sm">
-        {/* Logo */}
-        <h1 className="text-center text-3xl font-bold text-indigo-400 tracking-tight mb-8">
-          Moodify
-        </h1>
+    <div className="auth">
 
-        {/* Card */}
-        <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-8">
-          <h2 className="text-white text-xl font-semibold mb-6">
-            Create your account
+      {/* ── Left Panel ── */}
+      <div className="auth__left">
+        <img className="auth__left-img" src="/Images/1900x1900-000000-80-0-0.jpg" alt="bg" />
+        <div className="auth__left-overlay" />
+        <div className="auth__left-content">
+          <div className="auth__brand">Mood<span>ify</span></div>
+          <h2 className="auth__tagline">
+            Discover sounds made<br />for <em>how you feel</em>
           </h2>
-
-          <FormGroup
-            label="Name"
-            placeholder="Enter your name"
-            type="text"
-            name="username"
-            value={formData.name}
-            onChange={handleChange}
-          />
-          <FormGroup
-            label="Email"
-            placeholder="Enter your email"
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          <FormGroup
-            label="Password"
-            placeholder="Create a password"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-
-          <button
-            onClick={handleSubmit}
-            className="w-full mt-2 py-3 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-xl transition-colors duration-200"
-          >
-            Sign Up
-          </button>
+          <p className="auth__sub">
+            Join Moodify and let AI detect your mood through
+            your camera — then serve the perfect playlist instantly.
+          </p>
         </div>
-
-        {/* Footer */}
-        <p className="text-center text-neutral-500 text-sm mt-6">
-          Already have an account?{" "}
-          <Link
-            to="/login"
-            className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
-          >
-            Sign in
-          </Link>
-        </p>
       </div>
+
+      {/* ── Right Panel ── */}
+      <div className="auth__right">
+        <div className="auth__form-wrap">
+          <div className="auth__card">
+
+            <div className="auth__card-brand">Mood<span>ify</span></div>
+            <div className="auth__divider" />
+            <h1 className="auth__card-title">Create account</h1>
+            <p className="auth__card-subtitle">Start your mood-powered music journey</p>
+
+            <FormGroup label="Username" placeholder="Choose a username"
+              type="text" name="username" value={formData.username} onChange={handleChange} />
+            <FormGroup label="Email" placeholder="Enter your email"
+              type="email" name="email" value={formData.email} onChange={handleChange} />
+            <FormGroup label="Password" placeholder="Create a password"
+              type="password" name="password" value={formData.password} onChange={handleChange} />
+
+            <button className="auth__btn" onClick={handleSubmit} disabled={loading}>
+              {loading ? "Creating account..." : "Sign Up"}
+            </button>
+
+            <p className="auth__footer">
+              Already have an account? <Link to="/login">Sign in</Link>
+            </p>
+
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 };
